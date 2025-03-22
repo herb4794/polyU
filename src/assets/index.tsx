@@ -1,0 +1,5 @@
+export {default as Favicon} from './favicon.png'
+export {default as defaultCharcaters} from './defaultcharacter.jpeg'
+export {default as webDevelopment} from './web-development.png'
+export {default as mobileDevelopment} from './mobile-development.png'
+export {default as socialMedia} from './social-media.png'
