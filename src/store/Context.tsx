@@ -26,6 +26,10 @@ type ContextType = {
   setMyself: (state: string) => void
   education: string
   setEducation: (state: string) => void
+  setAuth: (state: any) => void
+  auth: any
+  setLoginStatus: (state: boolean) => void
+  loginStatus: boolean
 }
 
 export const ContextObj = createContext<ContextType>({
@@ -41,18 +45,24 @@ export const ContextObj = createContext<ContextType>({
     product_tc_brand: "",
     porduct_description: "",
     product_tc_description: "",
-    product_price : ""
+    product_price: ""
   }],
   myself: "",
   setMyself: () => { },
   education: "",
-  setEducation: () => { }
+  setEducation: () => { },
+  setAuth: () => { },
+  setLoginStatus: () => { },
+  auth: {},
+  loginStatus: false
 })
 
 const ContextProvider: React.FC<{ children: any }> = (props: any) => {
 
   const [myself, setMyself] = useState<string>("")
   const [education, setEducation] = useState<string>("")
+  const [auth, setAuth] = useState<any>({})
+  const [loginStatus, setLoginStatus] = useState<boolean>(false)
   const [product, setProduct] = useState<ContextInterface['product']>([{
     product_price: "",
     product_discount: "",
@@ -77,6 +87,14 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
     })
   }, [])
 
+
+  const runSetAuth = (_state: any) => {
+    setAuth(_state)
+  }
+
+  const runSetLoginStatus = (_state: boolean) => {
+    setLoginStatus(_state)
+  }
   const runSetself = (_state: string) => {
     setMyself(_state)
   }
@@ -87,6 +105,10 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
 
 
   const contextValue: ContextType = {
+    auth: auth,
+    setAuth: runSetAuth,
+    setLoginStatus: runSetLoginStatus,
+    loginStatus: loginStatus,
     product: product,
     myself: myself,
     setMyself: runSetself,
