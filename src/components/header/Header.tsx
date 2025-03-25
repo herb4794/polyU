@@ -93,7 +93,7 @@ const Header = () => {
         <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <div className="flex items-center">
-              <img src="https://static.vecteezy.com/system/resources/previews/017/444/153/non_2x/hand-drawn-wind-air-flow-icon-free-breath-symbol-fresh-air-flow-sign-doodle-wind-blow-icons-weather-symbol-climate-design-element-illustration-isolated-on-white-background-vector.jpg" className="mr-3 h-6 sm:h-9" alt="Blow Logo" />
+              <img src="https://i.redd.it/is-there-a-more-correct-lore-accurate-way-for-the-adeptus-v0-zl789e1341kd1.jpg?width=600&format=pjpg&auto=webp&s=ecb01f404f35f5ed8e2dc541a33440f89f9ca2e6" className="mr-3 h-6 sm:h-9" alt="Blow Logo" />
               <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Blow</span>
             </div>
             <button type='button' onClick={handleOpen} className="flex items-center lg:order-2">

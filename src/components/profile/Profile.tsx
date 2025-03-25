@@ -35,7 +35,7 @@ const Profile = ({ information }: any) => {
 
         <img className="float-right w-44 rounded-full" src={gitImage} />
 
-        <p className="text-lg dark:text-neutral-200">👋 Welcome. My name  Lawrence Cheng This blog is my summary.
+        <p className="text-lg dark:text-neutral-200">Praise Omnissiah!!! My name  Lawrence Cheng This blog is my summary.
           I am a Degree student majoring in Information security. My interests and strengths lie in 3-tier web development, native
           and progressive web apps development and system programming.</p>
         <br />
