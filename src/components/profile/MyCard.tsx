@@ -14,8 +14,8 @@ const MyCart = ({ title, description, image, url, code }: any) => {
         <div className="mt-2 dark:text-gray-300">{description}</div>
 
         <footer className="my-4 flex gap-1">
-          {code?.map((item: any) => {
-            return <span className="bg-neutral-100 px-4 py-1 text-sm dark:bg-neutral-600 dark:text-gray-50">{item}</span>
+          {code?.map((item: any, index: number) => {
+            return <span key={index} className="bg-neutral-100 px-4 py-1 text-sm dark:bg-neutral-600 dark:text-gray-50">{item}</span>
           })}
         </footer>
       </section>

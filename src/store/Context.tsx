@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { ref, onValue } from "firebase/database"
-import { db } from '../firebase/dbcon'
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { db, auth } from '../firebase/dbcon'
 
 
 interface ContextInterface {
@@ -61,7 +62,7 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
 
   const [myself, setMyself] = useState<string>("")
   const [education, setEducation] = useState<string>("")
-  const [auth, setAuth] = useState<any>({})
+  const [auths, setAuth] = useState<any>({})
   const [loginStatus, setLoginStatus] = useState<boolean>(false)
   const [product, setProduct] = useState<ContextInterface['product']>([{
     product_price: "",
@@ -85,11 +86,28 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
       const data = snapshot.val()
       setProduct(data)
     })
-  }, [])
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setAuth(user)
+        setLoginStatus(true)
+      } else {
+        setLoginStatus(false)
+      }
+    })
+    console.log(auths)
+  }, [loginStatus])
 
 
-  const runSetAuth = (_state: any) => {
-    setAuth(_state)
+  const runSetAuth = (_state: { email: string, password: string }) => {
+    signInWithEmailAndPassword(auth, _state.email, _state.password)
+      .then((userCredential) => {
+        const user = userCredential.user
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage)
+        console.log(errorCode)
+      })
   }
 
   const runSetLoginStatus = (_state: boolean) => {

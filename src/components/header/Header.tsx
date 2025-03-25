@@ -1,7 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useRef, useEffect } from 'react'
+import { ContextObj } from '../../store/Context'
 
 
 const SignInModal = ({ open, handler }: any) => {
+
+  const { setAuth } = useContext(ContextObj)
+  const formRef = useRef<any>()
+
 
   return (
     <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal={open}>
@@ -15,12 +20,12 @@ const SignInModal = ({ open, handler }: any) => {
             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                  <img className="mx-auto h-10 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" />
-                  <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Sign in to your account</h2>
+                  <img className="mx-auto h-10 w-auto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/How_to_use_icon.svg/2214px-How_to_use_icon.svg.png" alt="Your Blow" />
+                  <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">For the machine God</h2>
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                  <form className="space-y-6" action="#" method="POST">
+                  <form ref={formRef} className="space-y-6" >
                     <div>
                       <label className="block text-sm/6 font-medium text-gray-900">Email address</label>
                       <div className="mt-2">
@@ -32,7 +37,7 @@ const SignInModal = ({ open, handler }: any) => {
                       <div className="flex items-center justify-between">
                         <label className="block text-sm/6 font-medium text-gray-900">Password</label>
                         <div className="text-sm">
-                          <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+                          <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">{/* Forgot password? */}</a>
                         </div>
                       </div>
                       <div className="mt-2">
@@ -41,13 +46,18 @@ const SignInModal = ({ open, handler }: any) => {
                     </div>
 
                     <div>
-                      <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+                      <button type="submit" onClick={() => {
+                        const email = formRef.current[0].value
+                        const password = formRef.current[1].value
+                        setAuth({ email, password })
+                        handler()
+                      }} className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
                     </div>
                   </form>
 
                   <p className="mt-10 text-center text-sm/6 text-gray-500">
-                    Not a member?
-                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">Start a 14 day free trial</a>
+                    {/* Not a member? */}
+                    {/* <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">Start a 14 day free trial</a> */}
                   </p>
                 </div>
               </div>
