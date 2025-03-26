@@ -2,12 +2,10 @@ import React, { useState, useContext, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ContextObj } from '../../store/Context'
 
-
 const SignInModal = ({ open, handler }: any) => {
 
   const { setAuth } = useContext(ContextObj)
   const formRef = useRef<any>()
-
 
   return (
     <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal={open}>
@@ -55,10 +53,8 @@ const SignInModal = ({ open, handler }: any) => {
                       }} className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
                     </div>
                   </form>
-
                   <p className="mt-10 text-center text-sm/6 text-gray-500">
-                    {/* Not a member? */}
-                    {/* <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">Start a 14 day free trial</a> */}
+                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">Start a 14 day free trial</a>
                   </p>
                 </div>
               </div>
@@ -76,15 +72,12 @@ const SignInModal = ({ open, handler }: any) => {
   )
 }
 
-
-
 const Header = () => {
 
   const [open, setOpen] = useState<boolean>(false)
   const { loginStatus, signOut } = useContext(ContextObj)
   const handleOpen = () => {
     setOpen((cur) => !cur)
-    console.log(open)
   }
 
   return (

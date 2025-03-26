@@ -97,7 +97,6 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
         setLoginStatus(false)
       }
     })
-    console.log(auths)
   }, [loginStatus])
 
   const runSignOut = () => {
@@ -129,7 +128,7 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
 
 
   const contextValue: ContextType = {
-    auth: auth,
+    auth: auths,
     signOut: runSignOut,
     setAuth: runSetAuth,
     setLoginStatus: runSetLoginStatus,

@@ -1,10 +1,13 @@
 import React from 'react'
 import Sidebar from '../sidebar/Sidebar'
+import HeaderDashboard from './HeaderDashboard'
 
 const Panel = () => {
+
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50/50">
       <Sidebar />
+      <HeaderDashboard />
     </div>
   )
 }
