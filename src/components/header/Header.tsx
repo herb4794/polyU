@@ -1,4 +1,5 @@
-import React, { useState, useContext, useRef, useEffect } from 'react'
+import React, { useState, useContext, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { ContextObj } from '../../store/Context'
 
 
@@ -65,7 +66,7 @@ const SignInModal = ({ open, handler }: any) => {
 
               </div>
             </div>
-            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+            <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
               <button type="button" onClick={handler} className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
             </div>
           </div>
@@ -80,6 +81,7 @@ const SignInModal = ({ open, handler }: any) => {
 const Header = () => {
 
   const [open, setOpen] = useState<boolean>(false)
+  const { loginStatus, signOut } = useContext(ContextObj)
   const handleOpen = () => {
     setOpen((cur) => !cur)
     console.log(open)
@@ -96,15 +98,24 @@ const Header = () => {
               <img src="https://i.redd.it/is-there-a-more-correct-lore-accurate-way-for-the-adeptus-v0-zl789e1341kd1.jpg?width=600&format=pjpg&auto=webp&s=ecb01f404f35f5ed8e2dc541a33440f89f9ca2e6" className="mr-3 h-6 sm:h-9" alt="Blow Logo" />
               <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Blow</span>
             </div>
-            <button type='button' onClick={handleOpen} className="flex items-center lg:order-2">
-              <a href="#" className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Log in</a>
-
-            </button>
+            {
+              loginStatus !== true ?
+                <button type='button' onClick={handleOpen} className="flex items-center lg:order-2">
+                  <a className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Log in</a>
+                </button> :
+                <button type='button' onClick={signOut} className="flex items-center lg:order-2">
+                  <a className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Log out</a>
+                </button>
+            }
             <div className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
               <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
                 <li>
-                  <a href="#" className="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">Home</a>
+                  <Link to={'/'} className="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">Home</Link>
                 </li>
+                {loginStatus ?
+                  <li>
+                    <Link to={'/panel'} className="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">Panel</Link>
+                  </li> : null}
               </ul>
             </div>
           </div>

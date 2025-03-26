@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import Header from "./components/header/Header";
 import Profile from "./components/profile/Profile";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Home from "./components/home/Home";
+import Panel from "./components/controler/Panel";
+
 
 function App() {
   const [ownCard, setOwnCard] = useState<any[]>([])
@@ -33,20 +37,12 @@ function App() {
 
   }, [])
   return (
-    <div className="min-h-screen dark:bg-neutral-900">
-      <Header />
-
-      <Profile information={ownCard} />
-
-      <footer className="mx-auto mt-32 w-full max-w-container px-4 sm:px-6 lg:px-8" aria-labelledby="footer-heading">
-        <div className="items-centers grid grid-cols-1 justify-between gap-4 border-t border-gray-100 py-6 md:grid-cols-2">
-          <p className="text-sm/6 text-gray-600 max-md:text-center">
-            ©
-            <a href="">Create by Lawrence Cheng</a>. All rights reserved.
-          </p>
-        </div>
-      </footer>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home ownCard={ownCard} />} />
+        <Route path="/Panel" element={<Panel/> } />
+      </Routes>
+    </Router>
 
   );
 }

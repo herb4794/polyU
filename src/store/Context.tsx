@@ -31,6 +31,8 @@ type ContextType = {
   auth: any
   setLoginStatus: (state: boolean) => void
   loginStatus: boolean
+  signOut: () => void
+
 }
 
 export const ContextObj = createContext<ContextType>({
@@ -55,7 +57,8 @@ export const ContextObj = createContext<ContextType>({
   setAuth: () => { },
   setLoginStatus: () => { },
   auth: {},
-  loginStatus: false
+  loginStatus: false,
+  signOut: () => { }
 })
 
 const ContextProvider: React.FC<{ children: any }> = (props: any) => {
@@ -97,6 +100,9 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
     console.log(auths)
   }, [loginStatus])
 
+  const runSignOut = () => {
+    auth.signOut()
+  }
 
   const runSetAuth = (_state: { email: string, password: string }) => {
     signInWithEmailAndPassword(auth, _state.email, _state.password)
@@ -124,6 +130,7 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
 
   const contextValue: ContextType = {
     auth: auth,
+    signOut: runSignOut,
     setAuth: runSetAuth,
     setLoginStatus: runSetLoginStatus,
     loginStatus: loginStatus,
