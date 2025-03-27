@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Item from './table/Item'
 import Table from './table/Table'
 import { ImDrawer } from "react-icons/im";
+import { ContextObj } from '../../store/Context';
 const Dashbard = () => {
+
+  const context = useContext(ContextObj)
+
+  const { product } = context
   return (
     <div>
       <div className="mt-12">
@@ -36,18 +41,24 @@ const Dashbard = () => {
                 <thead>
                   <tr>
                     <th className="border-b border-blue-gray-50 py-3 px-6 text-left">
-                      <p className="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">companies</p>
+                      <p className="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">description</p>
                     </th>
                     <th className="border-b border-blue-gray-50 py-3 px-6 text-left">
-                      <p className="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">budget</p>
+                      <p className="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">discount</p>
                     </th>
                     <th className="border-b border-blue-gray-50 py-3 px-6 text-left">
-                      <p className="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">completion</p>
+                      <p className="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">quantity</p>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <Item />
+                  {product ? product.map((item: any) => {
+                    return <Item
+                      product_en_name={item.product_en_name}
+                      product_discount={item.product_discount}
+                      product_quantity={item.product_quantity}
+                    />
+                  }) : null}
                 </tbody>
               </table>
             </div>
