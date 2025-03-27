@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
-import Header from "./components/header/Header";
-import Profile from "./components/profile/Profile";
+import { useEffect, useState, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from "./components/home/Home";
 import Panel from "./components/controler/Panel";
+import { ContextObj } from "./store/Context";
+import Errors from "./components/404/Error";
 
 
 function App() {
   const [ownCard, setOwnCard] = useState<any[]>([])
+  const context = useContext(ContextObj)
+  const { loginStatus } = context
 
   useEffect(() => {
 
@@ -40,7 +42,11 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home ownCard={ownCard} />} />
-        <Route path="/Panel" element={<Panel/> } />
+        {loginStatus ?
+          <Route path="/panel" element={<Panel />} /> :
+          null
+        }
+        <Route path="*" element={<Errors />} />
       </Routes>
     </Router>
 
