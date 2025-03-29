@@ -8,7 +8,7 @@ const Table = ({ Image, number }: any) => {
       </div>
       <div className="p-4 text-right">
         <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">Machine Spirit</p>
-        <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">${number}k</h4>
+        <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">{number}k</h4>
       </div>
       <div className="border-t border-blue-gray-50 p-4">
         <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
