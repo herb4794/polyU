@@ -107,7 +107,7 @@ const Header = () => {
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <div className="flex items-center">
               <img src="https://i.redd.it/is-there-a-more-correct-lore-accurate-way-for-the-adeptus-v0-zl789e1341kd1.jpg?width=600&format=pjpg&auto=webp&s=ecb01f404f35f5ed8e2dc541a33440f89f9ca2e6" className="mr-3 h-6 sm:h-9" alt="HAVE Logo" />
-              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">HAVE</span>
+              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">MECHANICUS</span>
             </div>
             {loginStatus !== true ? (
               <div className="flex gap-2 items-center lg:order-2">
@@ -123,8 +123,8 @@ const Header = () => {
                 <button type='button' onClick={signOut} className="text-gray-800 dark:text-white font-medium text-sm px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Log out</button>
               </div>
             )}
-            <div className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
-              <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+            <div className="flex justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
+              <ul className="flex flex-col gap-2 mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
                 <li>
                   <Link to={'/cart'} className="relative block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white">
                     Cart

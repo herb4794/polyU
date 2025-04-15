@@ -108,7 +108,7 @@ const Cart = () => {
         console.log("✅ The order has been saved Firebase");
         localStorage.removeItem("order");
         setInitOrderArr([]);
-        toast.success("付款成功！訂單已儲存 🎉", {
+        toast.success("Payment successful! The order has been upload 🎉", {
           position: "top-center",
           autoClose: 2000,
         });
@@ -117,7 +117,7 @@ const Cart = () => {
         }, 2000);
       } catch (err) {
         console.error("❌ The order has been saved Firebase Error", err);
-        toast.error("儲存訂單失敗，請稍後再試");
+        toast.error("Order failed, please try again later");
       }
     }
   };

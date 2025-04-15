@@ -4,6 +4,7 @@ import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signInWithEmai
 import { db, auth, firestore } from '../firebase/dbcon'
 
 import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
 interface ContextInterface {
   product: {
@@ -147,12 +148,19 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
     )
 
     if (isExist) {
-      alert("Already in the Cart")
+      toast.error("Item already in cart", {
+        position: "top-center",
+        autoClose: 1000,
+      })
       return
     }
     const updatedOrder = [...currentOrder, _arr]
     localStorage.setItem("order", JSON.stringify(updatedOrder))
     setOrderArr(updatedOrder)
+    toast.success("Item added to cart", {
+      position: "top-center",
+      autoClose: 1000
+    })
   }
 
   const googleLogin = () => {
