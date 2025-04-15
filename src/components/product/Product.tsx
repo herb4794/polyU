@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { ContextObj } from '../../store/Context'
 import ProductCard from './ProductCard'
 
-const Profile = ({ setOrderArr }: any) => {
+const Product = ({ setOrderArr }: any) => {
 
   const context = useContext(ContextObj)
 
@@ -61,4 +61,4 @@ const Profile = ({ setOrderArr }: any) => {
   )
 }
 
-export default Profile
+export default Product

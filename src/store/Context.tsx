@@ -223,10 +223,7 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
   const runSeteducation = (_state: string) => {
     setEducation(_state)
   }
-  const removeOrderArrFunc = (index: number) => {
-    const newOrderArr = orderArr.filter((item: any, i: number) => i !== index)
-    setOrderArr(newOrderArr)
-  }
+
 
   const contextValue: ContextType = {
     auth: auths,

@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../header/Header'
-import Profile from '../profile/Profile'
+import Product from '../product/Product'
 
 const Home = ({ setOrderArr }: any) => {
   return (
@@ -9,7 +9,7 @@ const Home = ({ setOrderArr }: any) => {
 
         <Header />
 
-        <Profile setOrderArr={setOrderArr} />
+        <Product setOrderArr={setOrderArr} />
 
         <footer className="mx-auto mt-32 w-full max-w-container px-4 sm:px-6 lg:px-8" aria-labelledby="footer-heading">
           <div className="items-centers grid grid-cols-1 justify-between gap-4 border-t border-gray-100 py-6 md:grid-cols-2">
