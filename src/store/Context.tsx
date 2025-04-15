@@ -1,8 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { ref, onValue } from "firebase/database"
-import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
-import { db, auth } from '../firebase/dbcon'
+import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { db, auth, firestore } from '../firebase/dbcon'
 
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 interface ContextInterface {
   product: {
@@ -22,6 +23,7 @@ interface ContextInterface {
 }
 
 type ContextType = {
+  orderArr: any[]
   product: ContextInterface["product"]
   myself: string
   setMyself: (state: string) => void
@@ -32,7 +34,9 @@ type ContextType = {
   setLoginStatus: (state: boolean) => void
   loginStatus: boolean
   signOut: () => void
-
+  googleLogin: () => void
+  setOrderArr: (state: any) => void
+  totalQuantity: number
 }
 
 export const ContextObj = createContext<ContextType>({
@@ -50,6 +54,7 @@ export const ContextObj = createContext<ContextType>({
     product_tc_description: "",
     product_price: ""
   }],
+  orderArr: [],
   myself: "",
   setMyself: () => { },
   education: "",
@@ -58,11 +63,19 @@ export const ContextObj = createContext<ContextType>({
   setLoginStatus: () => { },
   auth: {},
   loginStatus: false,
-  signOut: () => { }
+  signOut: () => { },
+  googleLogin: () => { },
+  setOrderArr: () => { },
+  totalQuantity: 0
 })
 
 const ContextProvider: React.FC<{ children: any }> = (props: any) => {
-
+  const [cartItems, setCartItems] = useState<any[]>([]);
+  const [orderArr, setOrderArr] = useState<any[]>([])
+  const [getOrderArr, setGetOrderArr] = useState<any>(() => {
+    let order = JSON.parse(localStorage.getItem('order') || '[]')
+    return order
+  })
   const [myself, setMyself] = useState<string>("")
   const [education, setEducation] = useState<string>("")
   const [auths, setAuth] = useState<any>({})
@@ -82,12 +95,11 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
     product_tc_description: ""
   }])
   useEffect(() => {
-    setMyself("Lawrence Cheng")
-    setEducation("Hong Kong Polytechnic University")
     const starCountRef = ref(db, "product")
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val()
       setProduct(data)
+      console.log(data)
     })
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -97,16 +109,94 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
         setLoginStatus(false)
       }
     })
+    const storedOrder = getOrderFromStorage();
+    setOrderArr(storedOrder);
+    const stored = JSON.parse(localStorage.getItem("order") || "[]");
+    setCartItems(stored);
   }, [loginStatus])
+
+  useEffect(() => {
+    localStorage.setItem("order", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const runSignOut = () => {
     auth.signOut()
+  }
+
+  const getOrderFromStorage = (): any[] => {
+    return JSON.parse(localStorage.getItem("order") || "[]");
+  };
+
+  const totalQuantity = cartItems.reduce((sum, item) => sum + Number(item.quantity || 1), 0);
+
+  const checkUser = async (uid: string, checkState: (uid: string) => void) => {
+    const docRef = doc(firestore, 'users', uid)
+    const docSnap = await getDoc(docRef)
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data())
+    } else {
+      checkState(uid)
+    }
+  }
+
+  const runSetOrderArr = (_arr: any) => {
+    const currentOrder = getOrderFromStorage()
+
+    const isExist = currentOrder.some(
+      (item: any) => item.product_en_name === _arr.product_en_name
+    )
+
+    if (isExist) {
+      alert("Already in the Cart")
+      return
+    }
+    const updatedOrder = [...currentOrder, _arr]
+    localStorage.setItem("order", JSON.stringify(updatedOrder))
+    setOrderArr(updatedOrder)
+  }
+
+  const googleLogin = () => {
+    const provider = new GoogleAuthProvider()
+
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        const token = credential?.accessToken ?? "undefinded"
+        const user = result.user
+        const uid = user.uid
+        sessionStorage.setItem('token', token)
+        sessionStorage.setItem('uid', uid)
+        setLoginStatus(true)
+        checkUser(uid, async (uid) => {
+          await setDoc(doc(firestore, "users", uid), {
+            email: user.email,
+            imageUrl: user.photoURL,
+            method: "google",
+            name: user.displayName,
+            orders: []
+          })
+        })
+        console.log(user)
+        console.log("google")
+      }).catch((error: any) => {
+        console.log(error)
+      })
   }
 
   const runSetAuth = (_state: { email: string, password: string }) => {
     signInWithEmailAndPassword(auth, _state.email, _state.password)
       .then((userCredential) => {
         const user = userCredential.user
+        checkUser(user.uid, async (uid) => {
+          await setDoc(doc(firestore, "users", uid), {
+            email: user.email,
+            imageUrl: user.photoURL,
+            method: "local",
+            name: user.displayName,
+            orders: []
+          })
+        })
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -125,7 +215,10 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
   const runSeteducation = (_state: string) => {
     setEducation(_state)
   }
-
+  const removeOrderArrFunc = (index: number) => {
+    const newOrderArr = orderArr.filter((item: any, i: number) => i !== index)
+    setOrderArr(newOrderArr)
+  }
 
   const contextValue: ContextType = {
     auth: auths,
@@ -137,7 +230,12 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
     myself: myself,
     setMyself: runSetself,
     education: education,
-    setEducation: runSeteducation
+    setEducation: runSeteducation,
+    googleLogin: googleLogin,
+    setOrderArr: runSetOrderArr,
+    orderArr: getOrderArr,
+    totalQuantity: totalQuantity
+
   }
   return <ContextObj.Provider value={contextValue}>{props.children}</ContextObj.Provider>
 }

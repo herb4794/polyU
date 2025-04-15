@@ -4,12 +4,26 @@ import Home from "./components/home/Home";
 import Panel from "./components/controler/Panel";
 import { ContextObj } from "./store/Context";
 import Errors from "./components/404/Error";
-
-
+import Cart from "./components/cart/Cart";
+import Header from "./components/header/Header";
+import { PayPalScriptProvider, PayPalButtons, BraintreePayPalButtons, PayPalButtonsComponentProps, OnApproveBraintreeData, OnApproveBraintreeActions } from "@paypal/react-paypal-js";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ThankYou from "./components/thankyou/ThankYou";
+import OrderHistory from "./components/orderHistory/OrderHistory";
 function App() {
+
+  const initialOptions = {
+    "clientId": "AWUc0wnWe79TBqEdTIO9C6bTNMKO_mCmEdj0sukO1R7b96wzgUujeZ_Y1sRVI806G1bbPJIrx21njmSx",
+    currency: "HKD",
+    intent: "capture"
+  }
+
   const [ownCard, setOwnCard] = useState<any[]>([])
+  const [addCart, setAddCart] = useState<any[]>([])
+  const [readering, setReadering] = useState<boolean>(false)
   const context = useContext(ContextObj)
-  const { loginStatus } = context
+  const { loginStatus, setOrderArr } = context
 
   useEffect(() => {
 
@@ -39,16 +53,23 @@ function App() {
 
   }, [])
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home ownCard={ownCard} />} />
-        {loginStatus ?
-          <Route path="/panel" element={<Panel />} /> :
-          null
-        }
-        <Route path="*" element={<Errors />} />
-      </Routes>
-    </Router>
+    <PayPalScriptProvider options={initialOptions}>
+      <ToastContainer />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home setOrderArr={setOrderArr} />} />
+          {loginStatus ?
+            <Route path="/panel" element={<Panel />} /> :
+            null
+          }
+          <Route path="*" element={<Errors />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="/thankyou" element={<ThankYou />} />
+          <Route path="/order" element={<OrderHistory />} />
+        </Routes>
+      </Router>
+
+    </PayPalScriptProvider>
 
   );
 }

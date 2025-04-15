@@ -1,10 +1,12 @@
-import React, { useState, useContext, useRef } from 'react'
+import React, { useState, useContext, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ContextObj } from '../../store/Context'
+import SignUpModal from './SignUpModal'
 
 const SignInModal = ({ open, handler }: any) => {
 
-  const { setAuth } = useContext(ContextObj)
+
+  const { setAuth, googleLogin } = useContext(ContextObj)
   const formRef = useRef<any>()
 
   return (
@@ -52,9 +54,15 @@ const SignInModal = ({ open, handler }: any) => {
                         handler()
                       }} className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
                     </div>
+                    <div>
+                      <button type="submit" onClick={() => {
+                        googleLogin()
+                        handler()
+                      }} className="flex w-full justify-center rounded-md bg-orange-400 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Google Login</button>
+                    </div>
                   </form>
                   <p className="mt-10 text-center text-sm/6 text-gray-500">
-                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">Start a 14 day free trial</a>
+                    <p className="font-semibold text-indigo-600 hover:text-indigo-500">Machinery will triumph over flesh</p>
                   </p>
                 </div>
               </div>
@@ -73,48 +81,63 @@ const SignInModal = ({ open, handler }: any) => {
 }
 
 const Header = () => {
-
+  const [signupOpen, setSignupOpen] = useState<boolean>(false);
+  const [cartCount, setCartCount] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false)
-  const { loginStatus, signOut } = useContext(ContextObj)
+  const { loginStatus, signOut, auth, totalQuantity } = useContext(ContextObj)
   const handleOpen = () => {
     setOpen((cur) => !cur)
   }
+  const handleSignUpOpen = () => setSignupOpen((cur) => !cur);
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem("order") || "[]");
+    const totalQuantity = storedCart.reduce((acc: number, item: any) => acc + Number(item.quantity || 1), 0);
+    setCartCount(totalQuantity);
+  }, [open, loginStatus]);
 
+  useEffect(() => {
+
+  }, [totalQuantity])
   return (
     <div>
-
-      {open ? <SignInModal open={open} handler={handleOpen} /> : null}
+      {open && <SignInModal open={open} handler={handleOpen} />}
+      {signupOpen && <SignUpModal open={signupOpen} handler={handleSignUpOpen} />}
       <header>
         <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <div className="flex items-center">
-              <img src="https://i.redd.it/is-there-a-more-correct-lore-accurate-way-for-the-adeptus-v0-zl789e1341kd1.jpg?width=600&format=pjpg&auto=webp&s=ecb01f404f35f5ed8e2dc541a33440f89f9ca2e6" className="mr-3 h-6 sm:h-9" alt="Blow Logo" />
-              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Blow</span>
+              <img src="https://i.redd.it/is-there-a-more-correct-lore-accurate-way-for-the-adeptus-v0-zl789e1341kd1.jpg?width=600&format=pjpg&auto=webp&s=ecb01f404f35f5ed8e2dc541a33440f89f9ca2e6" className="mr-3 h-6 sm:h-9" alt="HAVE Logo" />
+              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">HAVE</span>
             </div>
-            {
-              loginStatus !== true ?
-                <button type='button' onClick={handleOpen} className="flex items-center lg:order-2">
-                  <a className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Log in</a>
-                </button> :
-                <button type='button' onClick={signOut} className="flex items-center lg:order-2">
-                  <a className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Log out</a>
-                </button>
-            }
+            {loginStatus !== true ? (
+              <div className="flex gap-2 items-center lg:order-2">
+                <button type='button' onClick={handleOpen} className="text-gray-800 dark:text-white font-medium text-sm px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Log in</button>
+                <button type='button' onClick={handleSignUpOpen} className="text-indigo-700 border border-indigo-600 dark:text-white font-medium text-sm px-4 py-2 rounded-lg hover:bg-indigo-100 dark:hover:bg-gray-700">Sign up</button>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-3 lg:order-2">
+                <img src={auth?.photoURL || "https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png"} alt="User Avatar" className="w-8 h-8 rounded-full border border-gray-300 dark:border-gray-600" />
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {auth?.displayName || 'User'}
+                </span>
+                <button type='button' onClick={signOut} className="text-gray-800 dark:text-white font-medium text-sm px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Log out</button>
+              </div>
+            )}
             <div className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
               <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
                 <li>
-                  <Link to={'/'} className="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">Home</Link>
+                  <Link to={'/cart'} className="relative block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white">
+                    Cart
+                  </Link>
                 </li>
-                {loginStatus ?
-                  <li>
-                    <Link to={'/panel'} className="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">Panel</Link>
-                  </li> : null}
+                <li><Link to={'/'} className="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white">Home</Link></li>
+                {loginStatus && <li><Link to={'/order'} className="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white">Order</Link></li>}
+                {loginStatus && auth.email === "admin@profile.com" && <li><Link to={'/panel'} className="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white">Panel</Link></li>}
               </ul>
             </div>
           </div>
         </nav>
       </header>
-
     </div>
   )
 }
