@@ -1,46 +1,120 @@
-# Getting Started with Create React App
+# 🛒 PolyU E-Commerce App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A responsive e-commerce web application built with **React**, **Firebase**, and **Tailwind CSS**, supporting user authentication, product browsing, shopping cart, PayPal payments, and order history tracking.
 
-## Available Scripts
+📌 GitHub: [https://github.com/herb4794/polyU](https://github.com/herb4794/polyU)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## ⚙️ Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **React 18 + TypeScript**
+- **Tailwind CSS 3**
+- **Firebase v9+ (Auth, Firestore, Storage, Realtime DB)**
+- **PayPal JS SDK Integration**
+- **React Router v6**
+- **Framer Motion (Animations)**
+- **Chart.js (Reports)**
+- **React Toastify (Toasts)**
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+---
 
-### `npm test`
+## ✅ Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 🔐 **User Registration / Login**
+  - Email + Password
+  - Google OAuth
+  - Avatar image upload
+- 🛍️ **Product Listing & Shopping Cart**
+  - Add / remove / update quantity
+  - Stored in `localStorage`
+- 💳 **PayPal Payment**
+  - Supports one-click checkout
+- 📦 **Order History Page**
+  - Orders stored in Firestore
+  - Displayed per user
+- 🛠️ **Admin Panel**
+  - Only visible to `admin@profile.com`
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 📦 Project Setup
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+git clone https://github.com/herb4794/polyU.git
+cd polyU
+npm install
+npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> Make sure you configure your Firebase project inside `src/firebase/dbcon.ts`.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 🔐 Firebase Storage Rule Suggestion
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```js
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /avatars/{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+    match /product/{allPaths=**} {
+      allow read;
+    }
+  }
+}
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+---
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 📁 Folder Structure
 
-## Learn More
+```
+src/
+├── assets/                 # Static images, logos, etc.
+├── components/
+│   ├── 404/               # NotFound page
+│   ├── cart/              # Cart-related components
+│   ├── controler/         # Logic controllers (maybe for layout or route)
+│   ├── header/            # Navigation bar, modals, etc.
+│   ├── home/              # Homepage components
+│   ├── orderHistory/      # Past order views
+│   ├── product/           # Product listings or detail components
+│   ├── sidebar/           # Admin or layout sidebar
+│   └── thankyou/          # Thank-you page after checkout
+├── firebase/
+│   └── dbcon.ts           # Firebase config
+├── store/
+│   └── Context.tsx        # Global context (auth, cart, etc.)
+├── App.tsx
+├── App.css
+├── index.tsx
+├── index.css
+├── tailwind.config.js
+└── tsconfig.json
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📷 Screenshots (Coming Soon)
+
+- Login
+- Add to Cart
+- Checkout via PayPal
+- View Orders
+
+---
+
+## 👤 Author
+
+**Lawrence Cheng**  
+🎓 Student at The Hong Kong Polytechnic University  
+📧 herb4794 (GitHub)
+
+---
+
+## 📜 License
+
+This project is for educational and personal learning purposes only.

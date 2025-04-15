@@ -6,7 +6,7 @@ import { ContextObj } from '../../store/Context'
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { PayPalButtons, PayPalButtonsComponentProps } from "@paypal/react-paypal-js";
-import { CreateOrderData, CreateOrderActions, OnApproveData, OnApproveActions } from "@paypal/paypal-js/types/components/buttons"
+import { OnApproveData, OnApproveActions } from "@paypal/paypal-js/types/components/buttons"
 import { arrayUnion, doc, updateDoc } from 'firebase/firestore'
 import { firestore } from '../../firebase/dbcon'
 const Cart = () => {
