@@ -3,7 +3,7 @@
 A responsive e-commerce web application built with **React**, **Firebase**, and **Tailwind CSS**, supporting user authentication, product browsing, shopping cart, PayPal payments, and order history tracking.
 
 📌 GitHub: [https://github.com/herb4794/polyU](https://github.com/herb4794/polyU)
-
+🌐 Live Demo: [https://schoolapp-c2f68.web.app/](https://schoolapp-c2f68.web.app/)
 ---
 
 ## ⚙️ Tech Stack
