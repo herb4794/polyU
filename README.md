@@ -31,8 +31,8 @@ A responsive e-commerce web application built with **React**, **Firebase**, and 
   - Stored in `localStorage`
 - 💳 **PayPal Payment**
   - Supports one-click checkout
-  - sandbox account for testing payments
-  - hkctfinalproject@testing.com , admin1234
+  - sandbox account for testing payments `hkctfinalproject@testing.com PW: admin1234`
+  - 
 - 📦 **Order History Page**
   - Orders stored in Firestore
   - Displayed per user
