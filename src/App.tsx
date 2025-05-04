@@ -16,7 +16,7 @@ function App() {
     "clientId": "AWUc0wnWe79TBqEdTIO9C6bTNMKO_mCmEdj0sukO1R7b96wzgUujeZ_Y1sRVI806G1bbPJIrx21njmSx",
     currency: "HKD",
     intent: "capture"
-  }
+  } 
 
   const context = useContext(ContextObj)
   const { loginStatus, setOrderArr } = context

@@ -21,7 +21,7 @@ const Cart = () => {
     const currentOrder = JSON.parse(localStorage.getItem("order") || "[]");
     const updatedOrder = currentOrder.filter((_: any, i: number) => i !== index);
     localStorage.setItem("order", JSON.stringify(updatedOrder));
-    setInitOrderArr(updatedOrder); // 觸發 UI 更新
+    setInitOrderArr(updatedOrder); 
   };
 
   const updateQuantity = (index: number, newQty: number) => {

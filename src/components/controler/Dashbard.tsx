@@ -3,6 +3,7 @@ import Item from './table/Item'
 import Table from './table/Table'
 import { ImDrawer } from "react-icons/im";
 import { ContextObj } from '../../store/Context';
+import EditProduct from './table/EditProduct';
 const Dashbard = () => {
 
   const context = useContext(ContextObj)
@@ -49,14 +50,19 @@ const Dashbard = () => {
                     <th className="border-b border-blue-gray-50 py-3 px-6 text-left">
                       <p className="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">quantity</p>
                     </th>
+                    <th className="border-b border-blue-gray-50 py-3 px-6 text-left">
+                      <p className="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">Edit</p>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {product ? product.map((item: any) => {
+                  {product ? product.map((item: any, index: number) => {
                     return <Item
+                      key={index}
                       product_en_name={item.product_en_name}
                       product_discount={item.product_discount}
                       product_quantity={item.product_quantity}
+                      productId={index}
                     />
                   }) : null}
                 </tbody>

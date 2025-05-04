@@ -1,8 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { ref, onValue } from "firebase/database"
+import { ref, onValue, update, push, child } from "firebase/database"
 import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 import { db, auth, firestore } from '../firebase/dbcon'
-
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 
@@ -38,6 +37,7 @@ type ContextType = {
   googleLogin: () => void
   setOrderArr: (state: any) => void
   totalQuantity: number
+
 }
 
 export const ContextObj = createContext<ContextType>({
@@ -67,7 +67,8 @@ export const ContextObj = createContext<ContextType>({
   signOut: () => { },
   googleLogin: () => { },
   setOrderArr: () => { },
-  totalQuantity: 0
+  totalQuantity: 0,
+
 })
 
 const ContextProvider: React.FC<{ children: any }> = (props: any) => {
@@ -100,7 +101,6 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val()
       setProduct(data)
-      console.log(data)
     })
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -139,6 +139,7 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
       checkState(uid)
     }
   }
+
 
   const runSetOrderArr = (_arr: any) => {
     const currentOrder = getOrderFromStorage()
@@ -239,7 +240,7 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
     googleLogin: googleLogin,
     setOrderArr: runSetOrderArr,
     orderArr: getOrderArr,
-    totalQuantity: totalQuantity
+    totalQuantity: totalQuantity,
 
   }
   return <ContextObj.Provider value={contextValue}>{props.children}</ContextObj.Provider>
