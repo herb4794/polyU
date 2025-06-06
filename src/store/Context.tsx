@@ -1,11 +1,11 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { ref, onValue, update, push, child } from "firebase/database"
+import { ref, onValue } from "firebase/database"
 import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 import { db, auth, firestore } from '../firebase/dbcon'
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 
-interface ContextInterface {
+export interface ContextInterface {
   product: {
     porduct_description: string
     product_discount: any
@@ -97,7 +97,7 @@ const ContextProvider: React.FC<{ children: any }> = (props: any) => {
     product_tc_description: ""
   }])
   useEffect(() => {
-    const starCountRef = ref(db, "product")
+    const starCountRef = ref(db, "product0")
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val()
       setProduct(data)

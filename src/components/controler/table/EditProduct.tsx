@@ -3,7 +3,6 @@ import { get, ref, update } from "firebase/database"
 import { db } from '../../../firebase/dbcon'
 
 const EditProduct = ({ product, handleOpen }: any) => {
-
   return (
     <div>
       <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
@@ -45,7 +44,6 @@ const EditProduct = ({ product, handleOpen }: any) => {
                   }
                 } catch (error) {
                   console.log("Error updating product: ", error)
-
                 }
               }}
               className="p-4 md:p-5">
@@ -76,7 +74,6 @@ const EditProduct = ({ product, handleOpen }: any) => {
           </div>
         </div>
       </div>
-
     </div >
   )
 }

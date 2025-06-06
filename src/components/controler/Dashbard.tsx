@@ -1,12 +1,19 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Item from './table/Item'
 import Table from './table/Table'
 import { ImDrawer } from "react-icons/im";
 import { ContextObj } from '../../store/Context';
 import EditProduct from './table/EditProduct';
+import AddProduct from './table/ AddProduct';
+
+
 const Dashbard = () => {
 
   const context = useContext(ContextObj)
+  const [addProductHandle, setAddProducctHandle] = useState<boolean>(false)
+  const handleOpen = (cur: boolean) => {
+    setAddProducctHandle(cur)
+  }
 
   const { product } = context
   return (
@@ -15,7 +22,6 @@ const Dashbard = () => {
         <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
           <Table Image={ImDrawer} number={40} />
         </div>
-
         <div className="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
           <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
 
@@ -29,7 +35,8 @@ const Dashbard = () => {
                   <strong>For the emperor</strong> this month
                 </p>
               </div>
-              <button aria-expanded="false" aria-haspopup="menu" id=":r5:" className="relative middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-8 max-w-[32px] h-8 max-h-[32px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30" type="button">
+              <button onClick={() => setAddProducctHandle((perv: any) => !perv)}
+                aria-expanded="false" aria-haspopup="menu" id=":r5:" className="relative middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-8 max-w-[32px] h-8 max-h-[32px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30" type="button">
                 <span className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currenColor" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" aria-hidden="true" className="h-6 w-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"></path>
@@ -56,6 +63,7 @@ const Dashbard = () => {
                   </tr>
                 </thead>
                 <tbody>
+                  {addProductHandle ? <AddProduct handleOpen={handleOpen} /> : null}
                   {product ? product.map((item: any, index: number) => {
                     return <Item
                       key={index}
