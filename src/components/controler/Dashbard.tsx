@@ -4,7 +4,7 @@ import Table from './table/Table'
 import { ImDrawer } from "react-icons/im";
 import { ContextObj } from '../../store/Context';
 import EditProduct from './table/EditProduct';
-import AddProduct from './table/ AddProduct';
+import AddProduct from './table/AddProduct';
 
 
 const Dashbard = () => {
