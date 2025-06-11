@@ -1,7 +1,7 @@
 {
   "name": "app",
   "version": "0.1.0",
-  "private": true,
+   "private": true,
   "dependencies": {
     "@faker-js/faker": "^6.1.2",
     "@headlessui/react": "^1.7.15",

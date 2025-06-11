@@ -6,8 +6,10 @@ import ContextProvider from './store/Context';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
+
 );
 root.render(
+
   <ContextProvider>
     <App />
   </ContextProvider>

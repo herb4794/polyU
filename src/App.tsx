@@ -10,9 +10,12 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ThankYou from "./components/thankyou/ThankYou";
 import OrderHistory from "./components/orderHistory/OrderHistory";
+import Authentication from "./components/controler/table/Authentication";
+
 function App() {
 
   const initialOptions = {
+
     "clientId": "AWUc0wnWe79TBqEdTIO9C6bTNMKO_mCmEdj0sukO1R7b96wzgUujeZ_Y1sRVI806G1bbPJIrx21njmSx",
     currency: "HKD",
     intent: "capture"
@@ -22,11 +25,13 @@ function App() {
   const { loginStatus, setOrderArr } = context
 
   useEffect(() => {
+    
   }, [])
 
   return (
     <PayPalScriptProvider options={initialOptions}>
       <ToastContainer />
+
       <Router>
         <Routes>
           <Route path="/" element={<Home setOrderArr={setOrderArr} />} />
@@ -38,6 +43,7 @@ function App() {
           <Route path="cart" element={<Cart />} />
           <Route path="/thankyou" element={<ThankYou />} />
           <Route path="/order" element={<OrderHistory />} />
+          <Route path="/auth" element={<Authentication />} />
         </Routes>
       </Router>
 

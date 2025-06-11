@@ -20,7 +20,8 @@ const Dashbard = () => {
     <div>
       <div className="mt-12">
         <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
-          <Table Image={ImDrawer} number={40} />
+          <Table Image={ImDrawer} number={40} discription={"For the Machine is immortal"} subtitle={"Machine Spirit"} />
+          <Table Image={ImDrawer} number={90} discription={"All User"} subtitle={"Authentication"} />
         </div>
         <div className="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
           <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
@@ -44,6 +45,7 @@ const Dashbard = () => {
                 </span>
               </button>
             </div>
+
             <div className="p-6 overflow-x-scroll px-0 pt-0 pb-2">
               <table className="w-full min-w-[640px] table-auto">
                 <thead>
@@ -76,6 +78,7 @@ const Dashbard = () => {
                 </tbody>
               </table>
             </div>
+
           </div>
         </div>
       </div>

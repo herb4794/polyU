@@ -74,6 +74,7 @@ export const ContextObj = createContext<ContextType>({
 const ContextProvider: React.FC<{ children: any }> = (props: any) => {
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [orderArr, setOrderArr] = useState<any[]>([])
+
   const [getOrderArr, setGetOrderArr] = useState<any>(() => {
     let order = JSON.parse(localStorage.getItem('order') || '[]')
     return order

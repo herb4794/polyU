@@ -1,6 +1,8 @@
 import React from 'react'
 import { IoMdSettings } from "react-icons/io";
+
 const DbFooter = () => {
+
   return (
     <div className="text-blue-gray-600">
       <footer className="py-2">
